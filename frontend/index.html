@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Driver Drowsiness Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>🚗 Driver Drowsiness Detection Dashboard</h1>
+
+        <div class="dashboard">
+            <!-- Live Video -->
+            <div class="video-box">
+                <img src="/video_feed" alt="Live Camera Feed">
+            </div>
+
+            <!-- Status Panel -->
+            <div class="status-box">
+                <h2>Status</h2>
+                <p id="status" class="awake">AWAKE</p>
+
+                <h2>Blinks</h2>
+                <p id="blinks">0</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
