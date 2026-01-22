@@ -86,7 +86,7 @@ Driver-Drowsiness-Detection/
 ## ▶️ Installation & Setup
 
 ### 1️⃣ Clone the Repository
-```bash
+
 git clone https://github.com/your-username/driver-drowsiness-detection.git
 cd driver-drowsiness-detection
 
