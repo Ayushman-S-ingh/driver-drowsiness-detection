@@ -64,6 +64,10 @@ class DrowsinessDetector:
             faces = self.last_faces if hasattr(self, "last_faces") else []
 
             for (x, y, w, h) in faces:
+                x = int(x * 2)
+                y = int(y * 2)
+                w = int(w * 2)
+                h = int(h * 2)
                 roi_gray = gray[y:y+h, x:x+w]
                 eyes = self.eye_cascade.detectMultiScale(roi_gray)
 
