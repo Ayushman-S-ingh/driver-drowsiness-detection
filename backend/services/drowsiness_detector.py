@@ -7,8 +7,12 @@ class DrowsinessDetector:
     def __init__(self):
         # Camera setup
         self.cap = cv2.VideoCapture(0)
-        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+
+
+        self.cap.set(cv2.CAP_PROP_FPS, 30)
+        time.sleep(1)
 
         # Load Haar cascades
         self.face_cascade = cv2.CascadeClassifier(
@@ -39,20 +43,25 @@ class DrowsinessDetector:
     # ---------------- MAIN LOOP ----------------
     def generate_frames(self):
         while True:
+            for _ in range(3):
+                self.cap.grab()
             ret, frame = self.cap.read()
             if not ret:
                 break
 
             # Resize for performance
             frame = cv2.resize(frame, (640, 480))
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            small = cv2.resize(frame, (320, 240))
+            gray = cv2.cvtColor(small, cv2.COLOR_BGR2GRAY)
+
 
             # Run face detection every 5 frames
             self.frame_count += 1
-            if self.frame_count % 5 == 0:
-                faces = self.face_cascade.detectMultiScale(gray, 1.3, 5)
-            else:
-                faces = []
+
+            if self.frame_count % 8 == 0:
+                self.last_faces = self.face_cascade.detectMultiScale(gray, 1.3, 5)
+
+            faces = self.last_faces if hasattr(self, "last_faces") else []
 
             for (x, y, w, h) in faces:
                 roi_gray = gray[y:y+h, x:x+w]
